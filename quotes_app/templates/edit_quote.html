@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+          <!--The /user/logout is the app's urls.py which triggers the logout method from views.logout-->
+          <a id="dashboard" href="/quotes">dashboard</a>
+          <a id="log-out" href="/user/logout">log off</a>
+        </div>
+        <div class="messages-container">
+            {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+              <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+                {{message}}
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="edit-container">
+            <p>Edit Quote</p>
+            
+            <form action="/quotes/{{quote.id}}/edit" method="POST">
+                {% csrf_token %}
+                <label for="quote_author">Quoted By</label>
+                <input type="text" name="quote_author" /> <br />
+                <label for="quote">Message</label>
+                <input type="text" name="quote"> </input>
+                <br />
+                <button><a id="cancel" href="/quotes">Cancel</a></button>
+                <input type="submit" value="Submit" />
+              </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

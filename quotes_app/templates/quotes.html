@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div id="left-header">Welcome, {{user.first_name}}</div>
+        <div id="right-header">
+          <!--The /user/logout is the app's urls.py which triggers the logout method from views.logout-->
+          <a id="log-out" href="/user/logout">log off</a>
+        </div>
+      </div>
+      <div id="quote-container">
+        <div class="messages-container">
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+              {{message}}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        <p>Contribute a Quote</p>
+        <form action="/quotes/create" method="POST">
+          {% csrf_token %}
+          <label for="quote_author">Quoted By</label>
+          <input type="text" name="quote_author" /> <br />
+          <label for="quote">Message</label>
+          <input type="text" name="quote"> </input>
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+        <div id="quote-output-container">
+          <h2>Quoteable Quotes</h2>
+          {% for quote in quotes %}
+          <ul>
+            <li>
+              {{quote.quote_author}}: {{quote.quote}}
+              <p>
+                Posted By<a href="/users/{{quote.publisher.id}}">
+                  {{quote.publisher.first_name}}
+                </a>
+                <!--verify if quote exists in favorite quote table if not show button to add to table-->
+                {% if not user in quote.favorites.all %}
+                <button><a href="/quotes/{{quote.id}}/favorite">Add to Favorites</a></button>
+                {% else %}
+                <!--if quote exists in favorite quote table show button to remove from favorites-->
+                <button><a href="/quotes/{{quote.id}}/unfavorite">Remove from Favorites</a></button>
+                {% endif %}
+
+              
+              </p>
+              
+              {%if quote.publisher.id == user.id %}
+              <a href="/quotes/{{quote.id}}">Edit</a>
+              <a href="/quotes/{{quote.id}}/delete">Delete</a> {% endif %}
+            </li>
+          </ul>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

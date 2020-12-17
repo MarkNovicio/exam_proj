@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!--The /user/logout is the app's urls.py which triggers the logout method from views.logout-->
+        <a id="dashboard" href="/quotes">dashboard</a>
+        <a id="log-out" href="/user/logout">log off</a>
+      </div>
+      <div id="user-container">
+        <p>Posted by {{user.first_name}}</p>
+
+        <h2>Count: {{user.quotes.all.count}}</h2>
+        {% for quote in user.quotes.all %}
+        <li>{{quote.quote_author}}: {{quote.quote}}</li>
+
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div id="left-header">Success!! Welcome, {{user.first_name}}!</div>
+        <div id="right-header">
+          <!--The /user/logout is the app's urls.py which triggers the logout method from views.logout-->
+          <a id="log-out" href="/user/logout">log off</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
